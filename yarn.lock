@@ -193,6 +193,10 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/lodash@^4.14.86":
+  version "4.14.86"
+  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.86.tgz#6788d3d75032c46322ff1c144c948cf8117c405b"
+
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.92"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-6.0.92.tgz#e7f721ae282772e12ba2579968c00d9cce422c5d"

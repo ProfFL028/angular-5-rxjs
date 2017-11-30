@@ -7,9 +7,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowserEventExperimentsComponent implements OnInit {
 
-  constructor() { }
+  hoverSection: HTMLElement;
 
-  ngOnInit() {
+  constructor() {
   }
 
+  ngOnInit() {
+    this.hoverSection = document.getElementById('hover');
+
+    this.hoverSection.addEventListener('mousemove', onMouseMove);
+
+    this.hoverSection.addEventListener('click', onClick);
+  }
+
+  unsubscribe() {
+    console.log('Called unsubscribe()');
+
+    this.hoverSection.removeEventListener('mousemove', onMouseMove);
+  }
+}
+
+function onClick(ev: MouseEvent) {
+  console.log("click", ev);
+}
+
+function onMouseMove(ev: MouseEvent) {
+  console.log("mousemove", ev);
 }
