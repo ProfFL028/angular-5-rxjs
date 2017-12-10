@@ -4,7 +4,7 @@ export const LESSONS_LIST_AVAILABLE = 'NEW_LIST_AVAILABLE';
 export const ADD_NEW_LESSON = 'ADD_NEW_LESSON';
 
 export interface  Observer {
-  nofity(data: any);
+  notify(data: any);
 }
 
 interface Subject {
@@ -25,7 +25,7 @@ class EventBus implements Subject {
   }
 
   notifyObservers(eventType: string, data: any) {
-    this.observersPerEvent(eventType).forEach(obs => obs.nofity(data));
+    this.observersPerEvent(eventType).forEach(obs => obs.notify(data));
   }
 
   private observersPerEvent(eventType: string): Observer[] {

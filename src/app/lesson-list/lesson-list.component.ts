@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {globalEventBus, LESSONS_LIST_AVAILABLE, Observer} from '../event-bus-experiments/event-bus';
+import {ADD_NEW_LESSON, globalEventBus, LESSONS_LIST_AVAILABLE, Observer} from '../event-bus-experiments/event-bus';
 import {Lesson} from '../shared/model/lesson';
 
 @Component({
@@ -7,20 +7,34 @@ import {Lesson} from '../shared/model/lesson';
   templateUrl: './lesson-list.component.html',
   styleUrls: ['./lesson-list.component.css']
 })
-export class LessonListComponent implements OnInit, Observer {
+export class LessonListComponent implements OnInit {
 
   lessons: Lesson[] = [];
 
   constructor() {
     console.log('lesson list component is registered as observer');
     globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
+
+    globalEventBus.registerObserver(ADD_NEW_LESSON, {
+      notify: lessonText => {
+        this.lessons.push({
+          id: Math.random(),
+          description: lessonText
+        })
+      }
+    });
   }
 
   ngOnInit() {
   }
-  nofity(data: any) {
+
+  notify(data: any) {
     console.log('Lessons list component received data ...');
     this.lessons = data;
   }
 
+  toggleLessonViewed(lesson: Lesson) {
+    console.log('toggle lesson ...');
+    lesson.completed = !lesson.completed;
+  }
 }
