@@ -16,7 +16,7 @@ interface Subject {
 class EventBus implements Subject {
   private observers: {[key: string]: Observer[]} = {};
 
-  registerObserver(eventType:string, obs: Observer) {
+  registerObserver(eventType: string, obs: Observer) {
     this.observersPerEvent(eventType).push(obs);
   }
 
