@@ -38,7 +38,7 @@ export class LessonListComponent implements OnInit {
     lesson.completed = !lesson.completed;
   }
 
-  delelte(lesson: Lesson) {
-    _.remove(this.lessons, lesson => lesson.id === this.lesson.id );
+  delete(deleted: Lesson) {
+    _.remove(this.lessons, lesson => lesson.id === deleted.id );
   }
 }
