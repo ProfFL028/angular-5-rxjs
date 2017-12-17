@@ -37,4 +37,8 @@ export class LessonListComponent implements OnInit {
     console.log('toggle lesson ...');
     lesson.completed = !lesson.completed;
   }
+
+  delelte(lesson: Lesson) {
+    _.remove(this.lessons, lesson => lesson.id === this.lesson.id );
+  }
 }
