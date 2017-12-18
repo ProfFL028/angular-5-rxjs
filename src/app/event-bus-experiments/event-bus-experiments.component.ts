@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {initializeLessonsList, store} from './app-data';
+import {store} from './app-data';
 
 import { testLessons } from '../shared/model/test-lesons';
 import { Lesson } from '../shared/model/lesson';

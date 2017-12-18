@@ -1,29 +1,34 @@
 ///<reference path="../event-bus-experiments/app-data.ts"/>
 import {Component, OnInit} from '@angular/core';
-import { Observer, store} from '../event-bus-experiments/app-data';
+import { store} from '../event-bus-experiments/app-data';
 import {Lesson} from '../shared/model/lesson';
-import * as _ from 'lodash';
+import {Observer} from 'rxjs/Observer';
+
+let _this;
 
 @Component({
   selector: 'lesson-list',
   templateUrl: './lesson-list.component.html',
   styleUrls: ['./lesson-list.component.css']
 })
-export class LessonListComponent implements OnInit, Observer {
+export class LessonListComponent implements OnInit, Observer<Lesson[]> {
+  error: (err: any) => void;
+  complete: () => void;
 
   lessons: Lesson[] = [];
 
   constructor() {
-    console.log('lesson list component is registered as observer');
+    _this = this;
   }
 
   ngOnInit() {
-    store.subscribe(this);
+    console.log('lesson list component is registered as observer');
+    store.lessonList$.subscribe(this);
   }
 
-  next(data: any) {
+  next(data: Lesson[]) {
     console.log('Lessons list component received data ...');
-    this.lessons = data;
+    _this.lessons = data;
   }
 
   toggleLessonViewed(lesson: Lesson) {
