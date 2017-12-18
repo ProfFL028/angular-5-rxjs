@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {Lesson} from '../shared/model/lesson';
 
 export const LESSONS_LIST_AVAILABLE = 'NEW_LIST_AVAILABLE';
 export const ADD_NEW_LESSON = 'ADD_NEW_LESSON';
@@ -32,4 +33,45 @@ class SubjectImplementation implements Subject {
   }
 }
 
-export let lessonsList$: Observable;
+class DataStore implements Observable {
+  private lessons: Lesson[] = [];
+
+  private lessonsListSubject = new SubjectImplementation();
+
+  subscribe(obs: Observer) {
+    this.lessonsListSubject.subscribe(obs);
+    obs.next(this.lessons);
+  }
+
+  unsubscribe(obs: Observer) {
+    this.lessonsListSubject.unsubscribe(obs);
+  }
+
+  initializeLessonsList(newList: Lesson[]) {
+    this.lessons = _.cloneDeep(newList);
+    this.broadcast();
+  }
+
+  addLesson(newLesson: Lesson) {
+    this.lessons.push(newLesson);
+    this.broadcast();
+  }
+
+  deleteLesson(deleted: Lesson) {
+    _.remove(this.lessons, lesson => lesson.id === deleted.id );
+    this.broadcast();
+  }
+
+  toggleLessonViewed(toggled: Lesson) {
+    const lesson = _.find(this.lessons, l => l.id === toggled.id);
+    lesson.completed = !lesson.completed;
+
+    this.broadcast();
+  }
+
+  broadcast() {
+    this.lessonsListSubject.next(_.cloneDeep(this.lessons));
+  }
+}
+
+export const store =  new DataStore();

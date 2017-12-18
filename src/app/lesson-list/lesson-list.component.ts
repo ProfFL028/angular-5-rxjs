@@ -1,5 +1,6 @@
+///<reference path="../event-bus-experiments/app-data.ts"/>
 import {Component, OnInit} from '@angular/core';
-import {lessonsList$, Observer} from '../event-bus-experiments/app-data';
+import { Observer, store} from '../event-bus-experiments/app-data';
 import {Lesson} from '../shared/model/lesson';
 import * as _ from 'lodash';
 
@@ -17,7 +18,7 @@ export class LessonListComponent implements OnInit, Observer {
   }
 
   ngOnInit() {
-    lessonsList$.subscribe(this);
+    store.subscribe(this);
   }
 
   next(data: any) {
@@ -27,10 +28,10 @@ export class LessonListComponent implements OnInit, Observer {
 
   toggleLessonViewed(lesson: Lesson) {
     console.log('toggle lesson ...');
-    lesson.completed = !lesson.completed;
+    store.toggleLessonViewed(lesson);
   }
 
   delete(deleted: Lesson) {
-    _.remove(this.lessons, lesson => lesson.id === deleted.id );
+    store.deleteLesson(deleted);
   }
 }
